@@ -16,13 +16,13 @@
           <router-link class="nav-link" active :to="{name: 'lacarte.my.supports'}">Sou profissional ou empresa</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" active :to="{name: 'lacarte.cadastro'}">Cadastre-se</router-link>
+          <router-link class="nav-link" active :to="{name: 'lacarte.home'}">Cadastre-se</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" active :to="{name: 'lacarte.login'}">Conectar</router-link>
+          <router-link class="nav-link" active :to="{name: 'lacarte.my.projects'}">Conectar</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" active :to="{name: 'lacarte.my.projects'}">Ajuda</router-link>
+          <router-link class="nav-link" active :to="{name: 'lacarte.home'}">Ajuda</router-link>
         </li>
       </ul>
       <form class="d-flex">
