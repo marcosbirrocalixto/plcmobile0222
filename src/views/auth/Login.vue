@@ -56,8 +56,10 @@
 
 <script>
 import { ref } from 'vue'
+import { useStore } from 'vuex'
+import { notify } from "@kyvg/vue3-notification"
+
 import router from '@/router'
-import { useStore} from 'vuex'
 
 export default {
     name: 'Auth',
@@ -65,7 +67,7 @@ export default {
         const store     = useStore()
         const email     = ref("")
         const password  = ref("")
-        const loading    = ref(false)
+        const loading   = ref(false)
 
 
         const auth = () => {
@@ -77,7 +79,19 @@ export default {
                 device_name: 'vue3_web'
             })
             .then(() => router.push({name: 'lacarte.home'}))
-            .catch(() => alert('error'))
+            .catch(error => {
+                let msgError = 'Falha ao autenticar'
+
+                if (error.status === 422) msgError = 'Dados Inválidos'
+                if (error.status === 404) msgError = 'Usuário não encontrado'
+
+                notify({
+                title: 'Falha ao autenticar',
+                text: msgError,
+                warn: "warn",
+                duration: 5000
+                })
+            })
             .finally(() => loading.value = false)
         }
 

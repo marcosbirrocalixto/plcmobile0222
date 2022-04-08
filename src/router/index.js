@@ -5,6 +5,7 @@ import MyProjects from '../views/projects/MyProjects.vue'
 import TelaCadastro from '../views/TelaCadastro.vue'
 import Login from '../views/auth/Login.vue'
 import Forget from '../views/auth/Forget.vue'
+import ResetPassword from '../views/auth/ResetPassword.vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
@@ -41,7 +42,13 @@ const routes = [
       {
         path: '/recuperar-senha',
         name: 'lacarte.forget',
-        component: Forget
+        component: Forget        
+      },
+      {
+        path: '/reset/:token',
+        name: 'reset.password',
+        component: ResetPassword,
+        props: true,
       }
     ]
   }

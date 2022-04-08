@@ -15,12 +15,16 @@
         <form>
           <div class="boxletters">
               <br>
-              <h3 style="color: green;   font-family: Tahoma, sans-serif; ">Recuperar Senha</h3>
+              <h3 style="color: green;   font-family: Tahoma, sans-serif; ">Reset Senha</h3>
               <br>            
           </div>
         <div class="boxletters">
             <input type="email" v-model="email" id="email" name="email" rows="1"  placeholder="E-mail">        
          </div>
+         <br>
+          <div class="boxletters">
+            <input type="password" v-model='password' name="password" id="password" rows="1" placeholder="Senha">
+          </div>
           <br>
           <div>
             <button 
@@ -29,9 +33,9 @@
                     'primary',
                     loading ? 'loading' : '',
                 ]" 
-                type="submit" @click.prevent="forgetPassword">
-                <span v-if="loading">Recuperando...</span>
-                <span v-else>Recuperar Senha</span>
+                type="submit" @click.prevent="login">
+                <span v-if="loading">Alterando...</span>
+                <span v-else>Mudar Senha</span>
             </button>
           </div>    
 
@@ -48,38 +52,42 @@
 
 <script>
 import { ref } from 'vue'
-import { useStore } from 'vuex'
-import { notify } from "@kyvg/vue3-notification"
+import router from '@/router'
+
+import ResetPasswordService from '@/services/password.reset.service'
 
 export default {
-    name: 'Forget',
-    setup() {
-        const store     = useStore()
+    name: 'ResetPassword',
+    props: {
+        token: {
+            require: true,
+        }
+    },
+    setup(props) {
         const email     = ref("")
+        const password  = ref("")
         const loading   = ref(false)
 
-        const forgetPassword = () => {
+
+        const login = () => {
             loading.value = true
 
-            store
-                .dispatch('forgetPassword', {email: email.value})
-                .then(() => notify({
-                    title: 'Sucesso',
-                    text: 'Confira o seu e-mail'
-                }))
-                .catch(() => notify({
-                    title: 'Falha',
-                    text: 'Falha ao recuperar o usuário',
-                    type: "warn"
-                }))
-                .finally(() => loading.value = false)
-    } 
+            ResetPasswordService.resetPassword({
+                email: email.value,
+                password: password.value,
+                token: props.token,
+            })
+            .then(() => router.push({name: 'lacarte.login'}))
+            .catch(() => alert('error'))
+            .finally(() => loading.value = false)
+        }
 
-    return {
-        email,
-        forgetPassword,
-        loading,
-    }
+        return {
+            login,
+            email,
+            password,
+            loading,
+        }
     }
 }
 </script>

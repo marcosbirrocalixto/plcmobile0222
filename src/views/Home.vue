@@ -49,10 +49,23 @@
 </template>
 
 <script>
+import { notify } from "@kyvg/vue3-notification"
 
 
 export default {
   name: 'Home',
+
+    mounted(){
+        notify({
+        title: 'Uso de Cookie',
+        text: 'Usamos cookie para armazenar dados no seu navegador...',
+        warn: "warn",
+        duration: 30000,
+        closeOnClick: true,
+        horizontal: "center",
+        vertical: "bottom"
+        })
+    }
 }
 </script>
 
