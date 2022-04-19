@@ -88,7 +88,7 @@ export default {
                 notify({
                 title: 'Falha ao autenticar',
                 text: msgError,
-                warn: "warn",
+                type: "warn",
                 duration: 5000
                 })
             })

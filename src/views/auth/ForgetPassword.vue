@@ -52,7 +52,7 @@ import { useStore } from 'vuex'
 import { notify } from "@kyvg/vue3-notification"
 
 export default {
-    name: 'Forget',
+    name: 'ForgetPassword',
     setup() {
         const store     = useStore()
         const email     = ref("")

@@ -53,6 +53,7 @@
 <script>
 import { ref } from 'vue'
 import router from '@/router'
+import { notify } from "@kyvg/vue3-notification"
 
 import ResetPasswordService from '@/services/password.reset.service'
 
@@ -72,13 +73,33 @@ export default {
         const login = () => {
             loading.value = true
 
-            ResetPasswordService.resetPassword({
+            ResetPasswordService.reset({
                 email: email.value,
                 password: password.value,
                 token: props.token,
             })
-            .then(() => router.push({name: 'lacarte.login'}))
-            .catch(() => alert('error'))
+            .then(() => {
+                notify({
+                title: 'Sucesso',
+                text: 'Senha Alterada com Sucesso',
+                type: "info",
+                duration: 5000
+                }) 
+                router.push({name: 'lacarte.login'})
+            })
+            .catch(error => {
+                let msgError = 'Falha ao autenticar'
+
+                if (error.status === 422) msgError = 'Dados Inválidos'
+                if (error.status === 404) msgError = 'Usuário não encontrado'
+
+                notify({
+                title: 'Falha ao autenticar',
+                text: msgError,
+                type: "warn",
+                duration: 5000
+                })                
+            })
             .finally(() => loading.value = false)
         }
 
